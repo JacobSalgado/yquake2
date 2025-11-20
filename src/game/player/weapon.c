@@ -1022,11 +1022,22 @@ Weapon_GrenadeLauncher(edict_t *ent)
 void
 Weapon_RocketLauncher_Fire(edict_t *ent)
 {
-	vec3_t offset, start;
-	vec3_t forward, right;
+	vec3_t offset, start, start_up, start_down, start_up_more, start_down_more;
+	vec3_t forward, right, up, left, down;
 	int damage;
 	float damage_radius;
 	int radius_damage;
+
+	if (!ent || !ent->client)
+	{
+		gi.dprintf("ERROR: ent or ent-> client is NULL");
+		return;
+	}
+
+	gi.dprintf("Fire direction set\n");
+
+	// increment and wrap the direction counter for next shot
+	ent->client->rocket_fire_direction = (ent->client->rocket_fire_direction + 1) % 4;
 
 	if (!ent)
 	{
@@ -1043,14 +1054,84 @@ Weapon_RocketLauncher_Fire(edict_t *ent)
 		radius_damage *= 4;
 	}
 
+	// ---------- Commenting this out since I made edits above --------
 	AngleVectors(ent->client->v_angle, forward, right, NULL);
 
-	VectorScale(forward, -2, ent->client->kick_origin);
+	VectorScale(forward, -2, ent->client->kick_origin); // original
+	VectorScale(right, -1, left); // leftward fire
+	VectorScale(up, -1, down);
+
 	ent->client->kick_angles[0] = -1;
 
-	VectorSet(offset, 8, 8, ent->viewheight - 8);
+	//VectorSet(offset, 8, 8, ent->viewheight - 8); // original vectorSet
+	VectorSet(offset, 150, 8, ent->viewheight - 8); // weapon modification
+
 	P_ProjectSource(ent, offset, forward, right, start);
-	fire_rocket(ent, start, forward, damage, 650, damage_radius, radius_damage);
+	//VectorScale(forward, -2, ent->client->kick_origin);
+
+	/*-------- Game Mod EDITS ------------*/
+	// Player's orientation
+	//AngleVectors(ent->client->v_angle, forward, right, up);
+
+	// offset for rocket spawn position
+	//VectorSet(offset, 8, 8, ent->viewheight - 8);
+	//P_ProjectSource(ent->s.origin, offset, forward, right, start);
+
+	gi.dprintf("Start position calculated");
+
+	// modify the forward vector based on the current fire direction
+	vec3_t fireDir;
+
+	/*switch (ent->client->rocket_fire_direction)
+	{
+		case 0: // rightward
+			VectorCopy(right, fireDir);
+			break;
+		case 1: // down
+			VectorScale(up, -1, fireDir);
+			break;
+		case 2: // left
+			VectorScale(right, -1, fireDir);
+			break;
+		case 3: // up
+			VectorCopy(up, fireDir);
+			break;
+		default:
+			VectorCopy(forward, fireDir);
+			break;
+	}*/
+
+	ent -> client->kick_angles[0] = -1;
+
+	/* ------------- New Additions for more projectiles on left and right ---------------- */
+	VectorSet(offset, 150, 8, ent->viewheight + 8); // 16 units higher
+	P_ProjectSource(ent, offset, forward, right, start_up); // shoot slightlight higher
+
+	VectorSet(offset, 150, 8, ent->viewheight - 24); // 16 units lower
+	P_ProjectSource(ent, offset, forward, right, start_down);
+
+	VectorSet(offset, 150, 8, ent->viewheight + 24); // 32 units higher
+	P_ProjectSource(ent, offset, forward, right, start_up_more); // shoot slightlight higher
+
+	VectorSet(offset, 150, 8, ent->viewheight - 40); // 32 units lower
+	P_ProjectSource(ent, offset, forward, right, start_down_more);
+
+
+	fire_rocket(ent, start, right, damage, 650, damage_radius, radius_damage); // rightward
+	fire_rocket(ent, start_up, right, damage, 650, damage_radius, radius_damage); // rightward and slightly up
+	fire_rocket(ent, start_down, right, damage, 650, damage_radius, radius_damage); // rightward and slightly down
+	fire_rocket(ent, start_up_more, right, damage, 650, damage_radius, radius_damage); // rightward and slightly up MORE
+	fire_rocket(ent, start_down_more, right, damage, 650, damage_radius, radius_damage); // rightward and slightly down MORE
+	//fire_rocket(ent, start + 100, right, damage, 650, damage_radius, radius_damage); // rightward but slightly higher start point
+
+	fire_rocket(ent, start, left, damage, 650, damage_radius, radius_damage); //left
+	fire_rocket(ent, start_up, left, damage, 650, damage_radius, radius_damage); //left and slightly up
+	fire_rocket(ent, start_down, left, damage, 650, damage_radius, radius_damage); //left and slight down
+	fire_rocket(ent, start_up_more, left, damage, 650, damage_radius, radius_damage); //left and slightly up MORE
+	fire_rocket(ent, start_down_more, left, damage, 650, damage_radius, radius_damage); //left and slight down MORE
+	//fire_rocket(ent, start + 100, left, damage, 650, damage_radius, radius_damage); //left but slightly higher start point?
+
+	fire_rocket(ent, start, down, damage, 650, damage_radius, radius_damage); // down shot
 
 	/* send muzzle flash */
 	gi.WriteByte(svc_muzzleflash);

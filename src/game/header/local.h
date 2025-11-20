@@ -966,6 +966,8 @@ struct gclient_s
 
 	edict_t *chase_target; /* player we are chasing */
 	qboolean update_chase; /* need to update chase info? */
+
+	int rocket_fire_direction; // game-mod: 0 = right, 1 = down, 2 = left, 3 = up
 };
 
 struct edict_s

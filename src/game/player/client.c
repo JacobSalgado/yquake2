@@ -303,6 +303,8 @@ SP_info_player_start(edict_t *self)
 		self->think = SP_CreateCoopSpots;
 		self->nextthink = level.time + FRAMETIME;
 	}
+
+	//self->client->rocket_fire_direction = 0;
 }
 
 /*
@@ -989,6 +991,7 @@ InitClientPersistant(gclient_t *client)
 	client->pers.max_grenades = 50;
 	client->pers.max_cells = 200;
 	client->pers.max_slugs = 50;
+	client->rocket_fire_direction = 0;
 
 	client->pers.connected = true;
 }
@@ -1004,6 +1007,7 @@ InitClientResp(gclient_t *client)
 	memset(&client->resp, 0, sizeof(client->resp));
 	client->resp.enterframe = level.framenum;
 	client->resp.coop_respawn = client->pers;
+	//client->rocket_fire_direction = 0;
 }
 
 /*
@@ -1855,6 +1859,7 @@ ClientBegin(edict_t *ent)
 	}
 
 	ent->client = game.clients + (ent - g_edicts - 1);
+	//ent->client->rocket_fire_direction = 0;
 
 	if (deathmatch->value)
 	{
