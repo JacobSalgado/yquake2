@@ -145,6 +145,19 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 				attacker->client->resp.score++;
 			}
 
+			/* PERSONA ADDITION */
+			if (attacker->client)
+			{
+				int xpPoints = 10;
+				attacker->client->pers.experiencePoints += xpPoints;
+				gi.cprintf(attacker, PRINT_MEDIUM,
+						"You gained %d experience points!\n",
+					xpPoints);
+				gi.cprintf(attacker, PRINT_MEDIUM,
+						"Total Experience Points: %d\n",
+					attacker->client->pers.experiencePoints);
+			}
+
 			/* medics won't heal monsters that they kill themselves */
 			if (attacker->classname && strcmp(attacker->classname, "monster_medic") == 0)
 			{

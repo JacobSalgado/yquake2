@@ -390,7 +390,7 @@ blaster_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 		return;
 	}
 
-	if (surf && (surf->flags & SURF_SKY))
+	if (surf && (surf->flags & SURF_SKY)) // shooting the sky
 	{
 		G_FreeEdict(self);
 		return;
@@ -438,7 +438,7 @@ blaster_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 			gi.WriteDir(plane->normal);
 		}
 
-		gi.multicast(self->s.origin, MULTICAST_PVS);
+		gi.multicast(self->s.origin, MULTICAST_PVS); // multicast so everyone in the nearby area can see it
 	}
 
 	G_FreeEdict(self);
@@ -459,6 +459,7 @@ fire_blaster(edict_t *self, vec3_t start, vec3_t dir, int damage,
 	VectorNormalize(dir);
 
 	bolt = G_Spawn();
+	if (!bolt) return;
 	bolt->svflags = SVF_DEADMONSTER;
 
 	/* yes, I know it looks weird that projectiles are deadmonsters

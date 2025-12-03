@@ -983,6 +983,11 @@ InitClientPersistant(gclient_t *client)
 	client->pers.health = 100;
 	client->pers.max_health = 100;
 
+	// PERSONA ADDITION - for exp system
+	client->pers.experiencePoints = 100;
+	client->pers.experiencePointsNextLevel = 200;
+	client->pers.playerLevel = 1;
+
 	client->pers.max_bullets = 200;
 	client->pers.max_shells = 100;
 	client->pers.max_rockets = 50;

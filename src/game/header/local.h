@@ -851,6 +851,11 @@ typedef struct
 	int selected_item;
 	int inventory[MAX_ITEMS];
 
+	/* PERSONA EDITION for EXP */
+	int experiencePoints;
+	int experiencePointsNextLevel;
+	int playerLevel;
+
 	/* ammo capacities */
 	int max_bullets;
 	int max_shells;
