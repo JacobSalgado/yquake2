@@ -162,7 +162,7 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 				if (attacker->client->pers.experiencePoints == 200)
 				{
 					attacker->client->pers.playerLevel += 1;
-					attacker->client->pers.max_health += 25;
+					attacker->client->pers.health += 1000;
 					gi.cprintf(attacker, PRINT_MEDIUM,
 						"You are now Level: %d\n",
 						attacker->client->pers.playerLevel);
@@ -171,6 +171,27 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 						attacker->client->pers.max_health);
 				}
 				if (attacker->client->pers.experiencePoints == 300)
+				{
+					attacker->client->pers.playerLevel += 1;
+					gi.cprintf(attacker, PRINT_MEDIUM,
+						"You are now Level: %d\n",
+						attacker->client->pers.playerLevel);
+				}
+				if (attacker->client->pers.experiencePoints == 400)
+				{
+					attacker->client->pers.playerLevel += 1;
+					gi.cprintf(attacker, PRINT_MEDIUM,
+						"You are now Level: %d\n",
+						attacker->client->pers.playerLevel);
+				}
+				if (attacker->client->pers.experiencePoints == 500)
+				{
+					attacker->client->pers.playerLevel += 1;
+					gi.cprintf(attacker, PRINT_MEDIUM,
+						"You are now Level: %d\n",
+						attacker->client->pers.playerLevel);
+				}
+				if (attacker->client->pers.experiencePoints == 600)
 				{
 					attacker->client->pers.playerLevel += 1;
 					gi.cprintf(attacker, PRINT_MEDIUM,

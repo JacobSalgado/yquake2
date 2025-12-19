@@ -981,7 +981,7 @@ InitClientPersistant(gclient_t *client)
 	client->pers.weapon = item;
 
 	client->pers.health = 100;
-	client->pers.max_health = 100;
+	client->pers.max_health = 100000;
 
 	// PERSONA ADDITION - for exp system
 	client->pers.experiencePoints = 100;
