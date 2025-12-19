@@ -1,26 +1,16 @@
-# Yamagi Quake II
+# Persona - a Quake 2 Mod (in progress)
+How to Install:
 
-Yamagi Quake II is an enhanced client for id Software's Quake
-II with focus on offline and coop gameplay. Both the gameplay and the graphics
-are unchanged, but many bugs in the last official release were fixed and some
-nice to have features like widescreen support and a modern OpenGL 3.2 renderer
-were added. Unlike most other Quake II source ports Yamagi Quake II is fully 64-bit
-clean. It works perfectly on modern processors and operating systems. Yamagi
-Quake II runs on nearly all common platforms; including FreeBSD, Linux, NetBSD,
-OpenBSD, Windows and macOS (experimental).
+git clone the repository into your local files
 
-This code is built upon Icculus Quake II, which itself is based on Quake II
-3.21. Yamagi Quake II is released under the terms of the GPL version 2. See the
-LICENSE file for further information.
+Utilizing Visual Studio 2022, CMake, and Git: 
 
-## Documentation
+HELPFUL GUIDE LISTED HERE TO SETUP YAGAMI QUAKE 2: https://github.com/yquake2/yquake2/blob/4e41dbf186d6d125b35ea338ec7472313071f0d5/doc/020_installation.md 
 
-Before asking any question, read through the documentation! The current
-version can be found here: [doc/010_index.md](doc/010_index.md)
+Defeat enemies to gain experience points and level up to become unstoppable.
 
-## Releases
-
-The official releases (including Windows binaries) can be found at our
-homepage: https://www.yamagi.org/quake2  
-**Unsupported** preview builds for Windows can be found at
-https://deponie.yamagi.org/quake2/misc/
+Level Ups:
+- Level 2: 20% Speed Increase
+- Level 3: +1000 Health
+- Level 4: DAMAGE BOOST
+- Level 5: Invulnerability 
