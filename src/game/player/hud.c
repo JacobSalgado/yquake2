@@ -606,6 +606,8 @@ G_SetStats(edict_t *ent)
 		{
 			ent->client->ps.stats[STAT_LAYOUTS] |= 2;
 		}
+
+		// PERSONA ADDITION TO SHOW LEVEL
 		if (ent->client->pers.health > 0)
 		{
 			ent->client->ps.stats[STAT_LAYOUTS] |= 1;
@@ -652,15 +654,18 @@ G_SetStats(edict_t *ent)
 	{
 		char string[128];
 		int xp_needed = (ent->client->pers.playerLevel + 1) * XP_PER_LEVEL;
-		int xp_progress = ent->client->pers.experiencePoints % XP_PER_LEVEL;
+		//int xp_progress = ent->client->pers.experiencePoints % XP_PER_LEVEL;
+		int xp_progress = ent->client->pers.experiencePoints;
 
 		// Position in top-right corner
 		Com_sprintf(string, sizeof(string),
 			"xr -150 yt 8 string2 \"Level %i\" "
-			"xr -150 yt 32 string \"XP: %i/%i\" ",
+			//"xr -150 yt 32 string \"XP: %i/%i\" ",
+			"xr -150 yt 32 string2 \"XP: %i\" ",
 			ent->client->pers.playerLevel,
-			xp_progress,
-			XP_PER_LEVEL
+			ent->client->pers.experiencePoints
+			//xp_progress,
+			//XP_PER_LEVEL
 		);
 
 		gi.WriteByte(svc_layout);
