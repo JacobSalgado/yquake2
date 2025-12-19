@@ -1087,6 +1087,10 @@ typedef enum
 #define STAT_CHASE 16
 #define STAT_SPECTATOR 17
 
+/* PERSONA ADDITION */
+#define STAT_XP 18
+#define STAT_LEVEL 19
+
 #define MAX_STATS 32
 
 /* dmflags->value flags */

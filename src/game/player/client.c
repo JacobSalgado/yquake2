@@ -988,6 +988,8 @@ InitClientPersistant(gclient_t *client)
 	client->pers.experiencePointsNextLevel = 200;
 	client->pers.playerLevel = 1;
 
+	// PERSONA ADDITION - for leveling up
+
 	client->pers.max_bullets = 200;
 	client->pers.max_shells = 100;
 	client->pers.max_rockets = 50;
@@ -997,6 +999,8 @@ InitClientPersistant(gclient_t *client)
 
 	client->pers.connected = true;
 }
+
+
 
 void
 InitClientResp(gclient_t *client)

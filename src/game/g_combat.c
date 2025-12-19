@@ -148,7 +148,7 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			/* PERSONA ADDITION */
 			if (attacker->client)
 			{
-				int xpPoints = 10;
+				int xpPoints = 100;
 				attacker->client->pers.experiencePoints += xpPoints;
 				gi.cprintf(attacker, PRINT_MEDIUM,
 						"You gained %d experience points!\n",
@@ -156,6 +156,27 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 				gi.cprintf(attacker, PRINT_MEDIUM,
 						"Total Experience Points: %d\n",
 					attacker->client->pers.experiencePoints);
+
+				//LevelUp(attacker); 
+
+				if (attacker->client->pers.experiencePoints == 200)
+				{
+					attacker->client->pers.playerLevel += 1;
+					attacker->client->pers.max_health += 25;
+					gi.cprintf(attacker, PRINT_MEDIUM,
+						"You are now Level: %d\n",
+						attacker->client->pers.playerLevel);
+					gi.cprintf(attacker, PRINT_MEDIUM,
+						"Max Health is Now: %d\n",
+						attacker->client->pers.max_health);
+				}
+				if (attacker->client->pers.experiencePoints == 300)
+				{
+					attacker->client->pers.playerLevel += 1;
+					gi.cprintf(attacker, PRINT_MEDIUM,
+						"You are now Level: %d\n",
+						attacker->client->pers.playerLevel);
+				}
 			}
 
 			/* medics won't heal monsters that they kill themselves */
@@ -182,6 +203,45 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 	}
 
 	targ->die(targ, inflictor, attacker, damage, point);
+}
+
+void LevelUp(edict_t *player)
+{
+	//player->client->pers.experiencePoints
+
+	int totalExperiencePoints = player->client->pers.experiencePoints;
+	int currentLevel = player->client->pers.playerLevel;
+
+	if (totalExperiencePoints == 200)
+	{
+		currentLevel += 1;
+		player->client->pers.max_health += 25;
+		gi.cprintf(player, PRINT_MEDIUM, "You are now Level %d\n", currentLevel);
+	}
+
+	if (totalExperiencePoints == 300)
+	{
+		currentLevel += 1;
+		gi.cprintf(player, PRINT_MEDIUM, "You are now Level %d\n" + currentLevel);
+	}
+
+	if (totalExperiencePoints == 400)
+	{
+		currentLevel += 1;
+		gi.cprintf(player, PRINT_MEDIUM, "You are now Level %d\n" + currentLevel);
+	}
+
+	if (totalExperiencePoints == 500)
+	{
+		currentLevel += 1;
+		gi.cprintf(player, PRINT_MEDIUM, "You are now Level %d\n" + currentLevel);
+	}
+
+	if (totalExperiencePoints == 600)
+	{
+		currentLevel += 1;
+		gi.cprintf(player, PRINT_MEDIUM, "You are now Level %d\n" + currentLevel);
+	}
 }
 
 void
@@ -690,6 +750,8 @@ T_Damage(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			}
 
 			Killed(targ, inflictor, attacker, take, point);
+			// PERSONA
+			//LevelUp(attacker);
 			return;
 		}
 	}

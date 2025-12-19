@@ -666,6 +666,9 @@ void T_RadiusDamage(edict_t *inflictor, edict_t *attacker,
 		float damage, edict_t *ignore, float radius,
 		int mod);
 
+// PERSONA ADDITION
+void LevelUp(edict_t* player);
+
 /* damage flags */
 #define DAMAGE_RADIUS 0x00000001 /* damage was indirect */
 #define DAMAGE_NO_ARMOR 0x00000002 /* armour does not protect from this damage */
@@ -855,6 +858,9 @@ typedef struct
 	int experiencePoints;
 	int experiencePointsNextLevel;
 	int playerLevel;
+	float damage_multiplier; // 1.5 = 50% more damage
+	float speed_multiplier; // 1.5, 50% faster
+	qboolean has_invuln; // permanent invulnerability
 
 	/* ammo capacities */
 	int max_bullets;
@@ -1119,6 +1125,18 @@ struct edict_s
 	moveinfo_t moveinfo;
 	monsterinfo_t monsterinfo;
 };
+
+#define MAX_LEVEL 10
+#define XP_PER_LEVEL 100 
+
+// PERSONA ADDITION
+typedef enum {
+	REWARD_NONE,
+	REWARD_SPEED,
+	REWARD_DAMAGE,
+	REWARD_HEALTH,
+	REWARD_INVULN
+} level_reward_t;
 
 /*
  * Uncomment for check that exported functions declarations are same as in

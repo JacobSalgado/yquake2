@@ -334,6 +334,58 @@ DeathmatchScoreboardMessage(edict_t *ent, edict_t *killer)
 		stringlength += j;
 	}
 
+	//HelpScreenMessage(ent, NULL);
+
+	char stringHelp[1400];
+
+	// Build your help text
+	Com_sprintf(stringHelp, sizeof(stringHelp),
+		"xv 32 yv 8 picn help "  // Background image (optional)
+		"xv 40 yv 40 string2 \"MY QUAKE 2 MOD - HELP\" "
+		"xv 40 yv 60 string \"Level Up System:\" "
+		"xv 40 yv 70 string \"- Kill enemies to gain XP\" "
+		"xv 40 yv 80 string \"- Reach 100 XP per level\" "
+		"xv 40 yv 90 string \"- Gain powerups at each level\" "
+		"xv 40 yv 110 string \"Level Rewards:\" "
+		"xv 40 yv 120 string \"Level 2: +20%% Speed\" "
+		"xv 40 yv 130 string \"Level 3: +25 Max Health\" "
+		"xv 40 yv 140 string \"Level 4: +30%% Damage\" "
+		"xv 40 yv 150 string \"Level 5: +50%% Speed\" "
+		"xv 40 yv 160 string \"Level 10: Invulnerability!\" "
+		"xv 40 yv 180 string \"Equipment:\" "
+		"xv 40 yv 190 string \"- Pick up items for stat boosts\" "
+		"xv 40 yv 200 string \"- Boosts stack with level rewards\" "
+		"xv 40 yv 220 string \"Press TAB to close\" "
+	);
+
+	gi.WriteByte(svc_layout);
+	gi.WriteString(string);
+}
+
+void HelpScreenMessage(edict_t* ent, char* entry)
+{
+	char string[1400];
+
+	// Build your help text
+	Com_sprintf(string, sizeof(string),
+		"xv 32 yv 8 picn help "  // Background image (optional)
+		"xv 40 yv 40 string2 \"MY QUAKE 2 MOD - HELP\" "
+		"xv 40 yv 60 string \"Level Up System:\" "
+		"xv 40 yv 70 string \"- Kill enemies to gain XP\" "
+		"xv 40 yv 80 string \"- Reach 100 XP per level\" "
+		"xv 40 yv 90 string \"- Gain powerups at each level\" "
+		"xv 40 yv 110 string \"Level Rewards:\" "
+		"xv 40 yv 120 string \"Level 2: +20%% Speed\" "
+		"xv 40 yv 130 string \"Level 3: +25 Max Health\" "
+		"xv 40 yv 140 string \"Level 4: +30%% Damage\" "
+		"xv 40 yv 150 string \"Level 5: +50%% Speed\" "
+		"xv 40 yv 160 string \"Level 10: Invulnerability!\" "
+		"xv 40 yv 180 string \"Equipment:\" "
+		"xv 40 yv 190 string \"- Pick up items for stat boosts\" "
+		"xv 40 yv 200 string \"- Boosts stack with level rewards\" "
+		"xv 40 yv 220 string \"Press TAB to close\" "
+	);
+
 	gi.WriteByte(svc_layout);
 	gi.WriteString(string);
 }
@@ -554,6 +606,10 @@ G_SetStats(edict_t *ent)
 		{
 			ent->client->ps.stats[STAT_LAYOUTS] |= 2;
 		}
+		if (ent->client->pers.health > 0)
+		{
+			ent->client->ps.stats[STAT_LAYOUTS] |= 1;
+		}
 	}
 
 	/* frags */
@@ -586,7 +642,30 @@ G_SetStats(edict_t *ent)
 		ent->client->ps.stats[STAT_HELPICON] = 0;
 	}
 
+	/* PERSONA ADDITION - XP */
+	ent->client->ps.stats[STAT_XP] = ent->client->pers.experiencePoints;
+	ent->client->ps.stats[STAT_LEVEL] = ent->client->pers.playerLevel;
+
 	ent->client->ps.stats[STAT_SPECTATOR] = 0;
+
+	if (ent->client->pers.health > 0)
+	{
+		char string[128];
+		int xp_needed = (ent->client->pers.playerLevel + 1) * XP_PER_LEVEL;
+		int xp_progress = ent->client->pers.experiencePoints % XP_PER_LEVEL;
+
+		// Position in top-right corner
+		Com_sprintf(string, sizeof(string),
+			"xr -150 yt 8 string2 \"Level %i\" "
+			"xr -150 yt 32 string \"XP: %i/%i\" ",
+			ent->client->pers.playerLevel,
+			xp_progress,
+			XP_PER_LEVEL
+		);
+
+		gi.WriteByte(svc_layout);
+		gi.WriteString(string);
+	}
 }
 
 void
