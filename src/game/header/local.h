@@ -911,6 +911,10 @@ struct gclient_s
 	qboolean showhelp;
 	qboolean showhelpicon;
 
+	/*PERSONA ADDITION*/
+	float camera_distance;
+	qboolean third_person;
+
 	int ammo_index;
 
 	int buttons;

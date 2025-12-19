@@ -167,12 +167,13 @@ Killed(edict_t *targ, edict_t *inflictor, edict_t *attacker,
 						"You are now Level: %d\n",
 						attacker->client->pers.playerLevel);
 					gi.cprintf(attacker, PRINT_MEDIUM,
-						"Max Health is Now: %d\n",
-						attacker->client->pers.max_health);
+						"Health is Now: %d\n",
+						attacker->client->pers.health);
 				}
 				if (attacker->client->pers.experiencePoints == 300)
 				{
 					attacker->client->pers.playerLevel += 1;
+					attacker->client->pers.speed_multiplier = 1.5;
 					gi.cprintf(attacker, PRINT_MEDIUM,
 						"You are now Level: %d\n",
 						attacker->client->pers.playerLevel);

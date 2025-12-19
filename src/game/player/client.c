@@ -988,7 +988,12 @@ InitClientPersistant(gclient_t *client)
 	client->pers.experiencePointsNextLevel = 200;
 	client->pers.playerLevel = 1;
 
-	// PERSONA ADDITION - for leveling up
+	// PERSONA ADDITION - for third person camera
+	client->third_person = true;
+	client->camera_distance = 100;
+
+	// persona addition - for pickups
+	client->pers.speed_multiplier = 1.5;
 
 	client->pers.max_bullets = 200;
 	client->pers.max_shells = 100;
@@ -2271,6 +2276,12 @@ ClientThink(edict_t *ent, usercmd_t *ucmd)
 		if (memcmp(&client->old_pmove, &pm.s, sizeof(pm.s)))
 		{
 			pm.snapinitial = true;
+		}
+
+		if (client->pers.speed_multiplier > 1.0)
+		{
+			ucmd->forwardmove = (short)(ucmd->forwardmove * client->pers.speed_multiplier);
+			ucmd->sidemove = (short)(ucmd->sidemove * client->pers.speed_multiplier);
 		}
 
 		pm.cmd = *ucmd;

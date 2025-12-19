@@ -438,7 +438,6 @@ HelpComputerMessage(edict_t *ent)
 	char string[1400];
 
 	Com_sprintf(string, sizeof(string),
-		"xv 32 yv 8 picn help "  // Background image (optional)
 		"xv 40 yv 40 string2 \"PERSONA RPG MOD\" "
 		"xv 40 yv 70 string2 \"LEVEL SYSTEM\" "
 		"xv 40 yv 90 string \"Kill enemies to gain XP\" "
@@ -446,14 +445,9 @@ HelpComputerMessage(edict_t *ent)
 		"xv 40 yv 110 string \"Max Level: %i\" "
 		"xv 40 yv 130 string2 \"LEVEL REWARDS\" "
 		"xv 40 yv 150 string \"Level 2: +20%% Speed Boost\" "
-		"xv 40 yv 160 string \"Level 3: +1000 Max Health\" "
+		"xv 40 yv 160 string \"Level 3: +1000 Health\" "
 		"xv 40 yv 170 string \"Level 4: +30%% Damage Boost\" "
-		"xv 40 yv 180 string \"Level 5: +50%% Speed Boost\" "
-		"xv 40 yv 190 string \"Level 6: +60%% Damage\" "
-		"xv 40 yv 200 string \"Level 7: +1000 Max Health\" "
-		"xv 40 yv 210 string \"Level 8: Double Speed!\" "
-		"xv 40 yv 220 string \"Level 9: Double Damage!\" "
-		"xv 40 yv 230 string \"Level 10: Invulnerability!\" "
+		"xv 40 yv 180 string \"Level 5: +Invulnerability\" "
 		"xv 40 yv 260 string2 \"EQUIPMENT\" "
 		"xv 40 yv 280 string \"Pick up items for stat boosts\" "
 		"xv 40 yv 290 string \"Boosts stack with level rewards\" ",
